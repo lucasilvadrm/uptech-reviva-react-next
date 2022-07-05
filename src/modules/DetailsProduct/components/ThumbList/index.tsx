@@ -2,7 +2,7 @@ import { ThumbList } from "./styles";
 import ThumbItem from "../ThumbItem";
 import { useEffect, useState } from "react";
 import { Product } from "types/product";
-import { getProducts } from "services/getProducts";
+import getProducts from "services/getProducts";
 
 interface Props {
   id: number;

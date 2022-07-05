@@ -6,8 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { storage } from "../data/storage";
-import { getProducts } from "services/getProducts";
+import getProducts from "services/getProducts";
 
 type ProductsContextProps = {
   children: ReactNode;

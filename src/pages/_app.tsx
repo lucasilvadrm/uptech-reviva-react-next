@@ -1,7 +1,7 @@
 import { CartProvider } from "contexts/CartContext";
-import { ProductProvider } from "contexts/ProductsContext";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import Script from "next/script";
 import { GlobalStyle } from "styles/GlobalStyle";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -15,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <CartProvider>
         <Component {...pageProps} />
+        <Script src="https://kit.fontawesome.com/3c39b8c1ad.js"></Script>
       </CartProvider>
     </>
   );

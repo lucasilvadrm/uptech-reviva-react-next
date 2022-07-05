@@ -39,7 +39,6 @@ const ProductListItem = ({ item }: PropsProductItem) => {
 
   const verify = quantidade_carrinho === quantidade_disponivel;
 
-  // console.log('Item',data?.id);
 
   return (
     <SC.StyledProductListItem key={id}>

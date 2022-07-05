@@ -14,8 +14,6 @@ const ProductDetails = ({ product }: PropsProduct) => {
 
   const { addProductInCart } = useCart();
 
-  console.log('product', product);
-
   return (
     <SC.StyledProductDetails>
       <SC.ProductTitle>{`${product.nome}, ${formactPrice(

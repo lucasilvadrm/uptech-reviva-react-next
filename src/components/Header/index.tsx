@@ -5,8 +5,8 @@ import { quantityCartTotal } from "functions";
 import { useCart } from "contexts/CartContext";
 
 export default function Header() {
-  // const { cart } = useCart();
-  // const quantity__cart = quantityCartTotal(cart);
+  const { cart } = useCart();
+  const quantity__cart = quantityCartTotal(cart);
 
   return (
     <S.StyledHeader>
@@ -19,7 +19,9 @@ export default function Header() {
             aria-label="ícone sacola de compras"
             className="fa-solid fa-bag-shopping"
           />
-          <S.QuantityCart quantity={0}>{0}</S.QuantityCart>
+          <S.QuantityCart quantity={quantity__cart}>
+            {quantity__cart}
+          </S.QuantityCart>
         </S.ContainerIcon>
       </Link>
     </S.StyledHeader>

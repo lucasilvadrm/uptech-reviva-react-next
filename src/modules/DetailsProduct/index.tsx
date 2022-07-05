@@ -20,10 +20,6 @@ const ContainerProductDetails = ({
     description: product?.imagens[0].descricao,
   };
 
-  useEffect(() => {
-    console.log('products', products);
-  }, [])
-
   return (
     <DefaultPage>
       <SC.Product>

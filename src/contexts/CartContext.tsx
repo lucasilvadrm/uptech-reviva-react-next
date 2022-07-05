@@ -4,10 +4,12 @@ import {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from "react";
-import { useProduct } from "./ProductsContext";
 import { formactPrice } from "functions";
+import { getCart } from "services/getCart";
+import { updateCart } from "services/updateCart";
 
 type CartContextProps = {
   children: ReactNode;
@@ -26,21 +28,29 @@ CartContext.displayName = "Cart";
 const CartProvider = ({ children }: CartContextProps) => {
   const [cart, setCart] = useState<Product[]>([]);
 
-  const { products, setProducts } = useProduct();
+  const fetchCartApi = async () => {
+    setCart(await getCart());
+  };
 
-  function decrementStorage(item: Product) {
-    const updatedProducts = products.map((product) => {
-      if (product.id === item.id) {
-        return {
-          ...product,
-          quantidade_disponivel: product.quantidade_disponivel - 1,
-        };
-      }
-      return product;
-    });
+  useEffect(() => {
+    fetchCartApi();
+  }, []);
 
-    setProducts(updatedProducts);
-  }
+  // const { products, setProducts } = useProduct();
+
+  // function decrementStorage(item: Product) {
+  //   const updatedProducts = products.map((product) => {
+  //     if (product.id === item.id) {
+  //       return {
+  //         ...product,
+  //         quantidade_disponivel: product.quantidade_disponivel - 1,
+  //       };
+  //     }
+  //     return product;
+  //   });
+
+  //   setProducts(updatedProducts);
+  // }
 
   const verifyQuantity = (item: Product) =>
     item.quantidade_carrinho < item.quantidade_disponivel;
@@ -50,13 +60,15 @@ const CartProvider = ({ children }: CartContextProps) => {
       const productInCart = cart.some((product) => product.id === item.id);
 
       if (!productInCart) {
-        // decrementStorage(item);
-        return setCart([...cart, { ...item, quantidade_carrinho: 1 }]);
+        return setCart(() => {
+          updateCart([...cart, { ...item, quantidade_carrinho: 1 }]);
+          return [...cart, { ...item, quantidade_carrinho: 1 }];
+        });
       }
 
       if (verifyQuantity(item)) {
-        setCart(
-          cart.map((itemCart) => {
+        setCart(() => {
+          const updatedCart = cart.map((itemCart) => {
             if (itemCart.id === item.id) {
               return {
                 ...itemCart,
@@ -64,17 +76,21 @@ const CartProvider = ({ children }: CartContextProps) => {
               };
             }
             return itemCart;
-          })
-        );
-        decrementStorage(item);
+          });
+
+          updateCart(updatedCart);
+
+          return updatedCart;
+        });
+        // decrementStorage(item);
       }
     },
     [cart]
   );
 
   const updateProductInCart = (item: Product, quantity: number) => {
-    setCart(
-      cart.map((itemCart) => {
+    setCart(() => {
+      const updatedCart = cart.map((itemCart) => {
         if (itemCart.id === item.id) {
           return {
             ...itemCart,
@@ -82,8 +98,11 @@ const CartProvider = ({ children }: CartContextProps) => {
           };
         }
         return itemCart;
-      })
-    );
+      });
+      updateCart(updatedCart);
+
+      return updatedCart;
+    });
   };
 
   const totalCart = () => {

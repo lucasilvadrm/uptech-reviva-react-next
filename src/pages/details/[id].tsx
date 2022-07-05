@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import ContainerProductDetails from "modules/DetailsProduct";
 import { GetStaticProps } from "next";
-import { storage } from "data/storage";
 import { Product } from "types/product";
 import { useRouter } from "next/router";
-import { getProductById, getProducts } from "services/getProducts";
+import getProducts from "services/getProducts";
+import getProductById from "services/getProduct";
 
 interface Props {
   product: Product;
@@ -21,12 +21,6 @@ const DetailsPage = ({ product, products }: Props) => {
       behavior: "smooth",
     });
   }, []);
-
-  // useEffect(() => {
-  //   fetch("/api/product")
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // }, []);
 
   if (isFallback) {
     return <div>Carregando...</div>;
