@@ -13,6 +13,7 @@ export const StyledHeader = styled.header`
 
 export const ContainerIcon = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 interface IQuantityCart {
