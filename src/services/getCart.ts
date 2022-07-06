@@ -1,3 +1,3 @@
 export const getCart = async () => {
-  return (await fetch("http://localhost:3000/api/cart/getcart")).json();
+  return (await fetch(`${process.env.NEXT_PUBLIC_API_NEXT}/api/cart/getcart`)).json();
 };
